@@ -38,6 +38,15 @@ class Actividad(models.Model):
     fecha_hora_creacion = models.DateTimeField()
     fecha_hora_actualizacion = models.DateTimeField()
 
+    def __str__(self):
+        return (f"{self.nombre_actividad} ({self.categoria}) - {self.ubicacion} | "
+                f"Descripcion: {self.descripcion} | " 
+                f"Inicio: {self.fecha_hora_inicio.strftime('%Y-%m-%d %H:%M')} | "
+                f"Fin: {self.fecha_hora_fin.strftime('%Y-%m-%d %H:%M') if self.fecha_hora_fin else 'Sin definir'} | "
+                f"Cupos: {self.cupos} | "
+                f"Estado: {self.estado if self.estado else 'Activo'}")
+
+
     class Meta:
         managed = False
         db_table = 'actividades'
