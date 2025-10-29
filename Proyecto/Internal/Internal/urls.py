@@ -17,9 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core import views
+from django.urls import path
+from core import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path ('', views.home, name='home'),
-    path ('register/', views.view_register, name='register')
+    path('', views.home, name='home'),
+    path('register/', views.view_register, name='register'),
+    path('crear_actividad/', views.crear_actividad, name='crear_actividad'),
+    path('actividad_creada/', views.actividad_creada, name='actividad_creada'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
