@@ -2,7 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from core.Negocio.auth import *
 from .forms import CustomUserCreationForm
-
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from core.Negocio.actividad_service import ActividadService
+from django.utils import timezone
+from core.models import Usuario
 # Create your views here.
 
 def view_register(request):
@@ -16,14 +20,9 @@ def home(request):
     return render(request, 'core/home.html')
 
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from core.Negocio.actividad_service import ActividadService
-from django.utils import timezone
 
 ##@login_required
 
-from core.models import Usuario  # asegúrate de importar tu modelo
 
 def crear_actividad(request):
     service = ActividadService()
@@ -46,11 +45,11 @@ def crear_actividad(request):
             service.crear_actividad(datos=datos, usuario=usuario, foto=foto)
             return redirect('actividad_creada')
         except Exception as e:
-            return render(request, 'core/07_activity_create.html', {'error': str(e)})
+            return render(request, 'core/crear_actividad.html', {'error': str(e)})
 
-    return render(request, 'core/07_activity_create.html')
+    return render(request, 'core/crear_actividad.html')
 
-from django.shortcuts import render
+
 
 def actividad_creada(request):
     return render(request, 'core/actividad_creada.html')
